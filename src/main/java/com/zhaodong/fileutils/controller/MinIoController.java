@@ -60,7 +60,7 @@ public class MinIoController {
 
                 // Upload the zip file to the bucket with putObject
                 Map<String,String> param=new HashMap<>();
-                param.put("cache-control","max-age=360000");
+                param.put("cache-control","max-age=3600000");
                 minioClient.putObject(bucket,pathName, files[i].getInputStream(),Long.valueOf(files[i].getInputStream().available()),param,null,files[i].getContentType());
                 filePaths[i]="/"+bucket+"/"+pathName;
             } catch (Exception e) {
