@@ -8,7 +8,6 @@ import com.zhaodong.fileutils.exceptions.ServiceException;
 import io.minio.ErrorCode;
 import io.minio.MinioClient;
 import io.minio.errors.ErrorResponseException;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -79,7 +79,7 @@ public class MinIoController {
             header.setContentType(MediaType.APPLICATION_OCTET_STREAM);
             header.set(HttpHeaders.CONTENT_DISPOSITION,
                     "attachment; filename=" + URLEncoder.encode(fileName, "UTF-8"));
-            byte[] bytes = IOUtils.toByteArray(is);
+            byte[] bytes = StreamUtils.copyToByteArray(is);
             return new ResponseEntity<>(bytes,
                     header, HttpStatus.OK);
 
